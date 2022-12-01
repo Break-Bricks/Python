@@ -8,10 +8,12 @@
   - 패키지 의존성을 관리해줘 편함
   - jupyter notebook이 함께 설치됨
   - Anaconda Prompt로 사용하면 conda 패키지 관리자 사용 가능
-    - $ conda env list
-    - $ conda list -n [ENV_NAME]
-    - $ conda create --name [ENV_NAME]
-    - $ conda install [PACK_NAME]
+```
+    $ conda env list
+    $ conda list -n [ENV_NAME]
+    $ conda create --name [ENV_NAME]
+    $ conda install [PACK_NAME]
+```
 
 ## Jupyter notebook
   - 웹 브라우저를 사용하여 문서와 코드를 동시에 지원하는 개발 도구
