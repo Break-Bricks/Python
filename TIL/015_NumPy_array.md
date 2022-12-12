@@ -110,3 +110,138 @@
     a % 2         # array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1], dtype=int32)
     a % 2 == 0    # array([ True, False, True, False, True, False, True, False, True, False])
     a[a % 2 == 0] # array([0, 2, 4, 6, 8])
+
+## array datatype
+  - ```py
+    x = np.array([1, 2, 3], dtype='f')
+    x.dtype # dtype('float32')
+    
+    # datatype을 명시 안하면 주어진 data로 알아서 유추
+    x = np.array([1, 2, 3])
+    x.dtype # dtype('int64')
+    x = np.array([1.0, 2.0, 3.0])
+    x.dtype # dtype('float64')
+    x = np.array([1, 2, 3.0])
+    x.dtype # dtype('float64')
+    
+  - ![image](https://user-images.githubusercontent.com/85230269/206985830-e4cb9eb2-eb6b-4449-aed8-04fa9b73ee81.png)
+
+## Inf / NaN
+  - 무한대를 표현하기 위한 np.inf (infinity)
+  - 정의할 수 없는 숫자를 나타내는 np.nan (not a number)
+  - ```py
+    np.array([0, 1, -1, 0]) / np.array([1, 0, 0, 0]) # array([  0.,  inf, -inf,  nan])
+    np.log(0) # -inf
+    np.exp(-np.inf) # 0.0
+    
+## array 생성
+  - NumPy에서 제공하는 배열 생성 명령
+    - `zeros`, `ones`
+    - `zeros_like`, `ones_like`
+    - `empty`
+    - `arange`
+    - `linspace`, `logspace`
+    - ```py
+      a = np.zeros(5) # 크기 5에 모든 값이 0
+      a # array([0., 0., 0., 0., 0.])
+      
+      b = np.zeros((2, 3)) # 크기 뜻하는 tuple 입력하면 다차원 배열도 생성 가능
+      b
+      # array([[0., 0., 0.],
+      #        [0., 0., 0.]])
+      
+      c = np.zeros((5, 2), dtype="i")
+      c
+      # array([[0, 0],
+      #        [0, 0],
+      #        [0, 0],
+      #        [0, 0],
+      #        [0, 0]], dtype=int32)
+      
+      # 문자열 배열도 가능하지만 모든 원소의 문자열 크기가 같아야 함
+      d = np.zeros(5, dtype="U4")
+      d[0] = "abc"
+      d[1] = "abcd"
+      d[2] = "ABCDE"
+      d #array(['abc', 'abcd', 'ABCD', '', ''], dtype='<U4')
+      
+      e = np.ones((2, 3, 4), dtype="i8") # 값을 1로 초기화
+      e
+      # array([[[1, 1, 1, 1],
+      #         [1, 1, 1, 1],
+      #         [1, 1, 1, 1]],
+      #        [[1, 1, 1, 1],
+      #         [1, 1, 1, 1],
+      #         [1, 1, 1, 1]]])
+      
+      # 크기를 따로 명시하지 않고 다른 배열과 같은 크기의 배열을 생성 -> ones_like, zeros_like
+      f = np.ones_like(b, dtype="f")
+      f
+      # array([[1., 1., 1.],
+      #        [1., 1., 1.]], dtype=float32)
+      
+      # 배열이 커지면 초기화하는데도 시간이 걸려서, 시간을 단축하려면 empty 명령 사용
+      # 기존에 메모리에 저장되어 있던 값이 있으므로 원소의 값을 미리 알 수 없음
+      g = np.empty((4, 3))
+      g
+      # array([[6.94820328e-310, 4.67533915e-310, 5.28964691e+180],
+      #        [6.01346953e-154, 4.81809028e+233, 7.86517465e+276],
+      #        [6.01346953e-154, 2.58408173e+161, 2.46600381e-154],
+      #        [2.47379808e-091, 4.47593816e-091, 6.01347002e-154]])
+      
+      # arange 명령은 NumPy 버전의 range 명령 (특정한 규칙에 따라 증가하는 수열)
+      np.arange(10) # array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) (0 ... n-1)
+      np.arange(3, 21, 2) # array([ 3,  5,  7,  9, 11, 13, 15, 17, 19]) (시작, 끝(포함x), 단계)
+      
+      # linspace 명령이나 logspace 명령은 선형 구간 혹은 로그 구간을 지정한 구간의 수만큼 분할
+      np.linspace(0, 100, 5) # array([  0.,  25.,  50.,  75., 100.]) (시작, 끝(포함), 갯수)
+      np.logspace(0.1, 1, 10)
+      # array([ 1.25892541,  1.58489319,  1.99526231,  2.51188643,  3.16227766,
+      #         3.98107171,  5.01187234,  6.30957344,  7.94328235, 10.        ])
+      
+## 전치(transpose) 연산
+  - 2차원 배열의 전치 연산은 행과 열을 바꾸는 작업
+  - 배열의 `T` 속성으로 구할 수 있음 (method가 아닌 속성이라는 점에 유의)
+  - ```py
+    A = np.array([[1, 2, 3], [4, 5, 6]])
+    A.T
+    # array([[1, 4],
+    #        [2, 5],
+    #        [3, 6]])
+    
+## array 크기 변경
+  - 만들어진 배열의 내부 data는 보존한 채로 형태만 바꾸려면 `reshape` method 사용
+    - ```py
+      a = np.arange(12)
+      a # array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+
+      b = a.reshape(3, 4)
+      b
+      # array([[0, 1, 2, 3],
+      #        [4, 5, 6, 7],
+      #        [8, 9, 10, 11]])
+
+      # 원소의 갯수가 정해져 있기 때문에 tuple의 원소 중 하나는 -1로 대체 가능 (다른 값으로부터 자동 계산됨)
+      a.reshape(3, -1)
+      # array([[0, 1, 2, 3],
+      #        [4, 5, 6, 7],
+      #        [8, 9, 10, 11]])
+
+      a.reshape(2, 2, -1)
+      # array([[[0, 1, 2],
+      #         [3, 4, 5]],
+      #        [[6, 7, 8],
+      #         [9, 10, 11]]])
+    
+  - 다차원 배열을 무조건 1차원으로 만들려면 `flatten` 또는 `ravel` method 사용
+    - ```py
+      a.flatten() # array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+      a.ravel() # array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+      
+  - 배열의 차원만 증가시키는 경우 `newaxis` method 사용
+    - ```py
+      x = np.arange(5)
+      x # array([0, 1, 2, 3, 4])
+      
+      x.reshape(1, 5) # array([[0, 1, 2, 3, 4]])
+      x[np.newaxis, :]  # array([[0, 1, 2, 3, 4]])
