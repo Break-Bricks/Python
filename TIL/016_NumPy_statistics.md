@@ -17,12 +17,15 @@
       - ```py
         np.std(x) # 10.734628476137871
     - 최댓값 / 최솟값
-      - np.max(x) # 23
-      - np.min(x) # -24
+      - ```py
+        np.max(x) # 23
+        np.min(x) # -24
     - 중앙값
-      - np.median(x) # 5.0
+      - ```py
+        np.median(x) # 5.0
     - 사분위수(quartile) / 백분위수(percentile)
-      - np.percentile(x, 0) # -24.0 (최솟값)
-      - np.percentile(x, 25) # 0.0 (1사분위 수)
-      - np.percentile(x, 50) # 5.0 (2사분위 수)
-      - np.percentile(x, 100) # 23.0 (4사분위 수)
+      - ```py
+        np.percentile(x, 0) # -24.0 (최솟값)
+        np.percentile(x, 25) # 0.0 (1사분위 수)
+        np.percentile(x, 50) # 5.0 (2사분위 수)
+        np.percentile(x, 100) # 23.0 (4사분위 수)
