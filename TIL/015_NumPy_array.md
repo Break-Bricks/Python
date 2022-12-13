@@ -37,13 +37,23 @@
     L = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     print(2 * L) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     
-    ## 벡터화 연산은 이런 것도 다 됨
+    # 벡터화 연산은 이런 것도 다 됨
     a = np.array([1, 2, 3])
     b = np.array([10, 20, 30])
     2 * a + b           # array([12, 24, 36])
     a == 2              # array([False,  True, False])
     b > 10              # array([False,  True,  True])
     (a == 2) & (b > 10) # array([False,  True, False])
+    np.exp(a)           # array([1., 2.71828183, 7.3890561])
+    10 ** a             # array([1, 10, 100])
+    np.log(a + 1)       # array([0., 0.69314718, 1.09861229])
+    
+    # 배열의 모든 원소가 다 같은지 알고 싶으면 all 사용
+    a = np.array([1, 2, 3, 4])
+    b = np.array([4, 2, 2, 4])
+    c = np.array([1, 2, 3, 4])
+    np.all(a == b) # False
+    np.all(a == c) # True
     
 ## 2-dimensional array
   - `ndarray`는 N-dimensional Array의 약자
@@ -124,7 +134,7 @@
     x = np.array([1, 2, 3.0])
     x.dtype # dtype('float64')
     
-  - ![image](https://user-images.githubusercontent.com/85230269/206985830-e4cb9eb2-eb6b-4449-aed8-04fa9b73ee81.png)
+![image](https://user-images.githubusercontent.com/85230269/206985830-e4cb9eb2-eb6b-4449-aed8-04fa9b73ee81.png)
 
 ## Inf / NaN
   - 무한대를 표현하기 위한 np.inf (infinity)
@@ -245,3 +255,151 @@
       
       x.reshape(1, 5) # array([[0, 1, 2, 3, 4]])
       x[np.newaxis, :]  # array([[0, 1, 2, 3, 4]])
+
+## array concatenate (배열 연결)
+  - 행의 수나 열의 수가 같은 두 개 이상의 배열을 연결하여 더 큰 배열을 만들 수 있음
+  - `hstack`
+  - `vstack`
+  - `dstack`
+  - `stack`
+  - `r_` : method 이지만 소괄호 대신 indexing처럼 대괄호[]를 사용 (indexer)
+  - `c_` : 얘도 indexer
+  - `tile`
+  - ```py
+    a1 = np.ones((2, 3))
+    a2 = np.zeros((2, 2))
+    np.hstack([a1, a2])
+    # array([[1., 1., 1., 0., 0.],
+    #        [1., 1., 1., 0., 0.]])
+    
+    b1 = np.ones((2, 3))
+    b2 = np.zeros((3, 3))
+    np.vstack([b1, b2])
+    # array([[1., 1., 1.],
+    #        [1., 1., 1.],
+    #        [0., 0., 0.],
+    #        [0., 0., 0.],
+    #        [0., 0., 0.]])
+    
+    c1 = np.ones((3, 4))
+    c2 = np.zeros((3, 4))
+    np.dstack([c1, c2]) # (3 x 4 x 2)
+    # array([[[1., 0.],
+    #         [1., 0.],
+    #         [1., 0.],
+    #         [1., 0.]],
+    #        [[1., 0.],
+    #         [1., 0.],
+    #         [1., 0.],
+    #         [1., 0.]],
+    #        [[1., 0.],
+    #         [1., 0.],
+    #         [1., 0.],
+    #         [1., 0.]]])
+    
+    c = np.stack([c1, c2]) # axis default = 0 -> (2 x 3 x 4)
+    c
+    # array([[[1., 1., 1., 1.],
+    #         [1., 1., 1., 1.],
+    #         [1., 1., 1., 1.]],
+    #        [[0., 0., 0., 0.],
+    #         [0., 0., 0., 0.],
+    #         [0., 0., 0., 0.]]])
+    c = np.stack([c1, c2], axis=1) # (3 x 2 x 4)
+    c
+    # array([[[1., 1., 1., 1.],
+    #         [0., 0., 0., 0.]],
+    #        [[1., 1., 1., 1.],
+    #         [0., 0., 0., 0.]],
+    #        [[1., 1., 1., 1.],
+    #         [0., 0., 0., 0.]]])
+    
+    np.r_[np.array([1, 2, 3]), np.array([4, 5, 6])] # array([1, 2, 3, 4, 5, 6])
+    
+    np.c_[np.array([1, 2, 3]), np.array([4, 5, 6])]
+    # array([[1, 4],
+    #        [2, 5],
+    #        [3, 6]])
+    
+    # tile은 동일한 배열을 반복하여 연결
+    a = np.array([[0, 1, 2], [3, 4, 5]])
+    np.tile(a, 2)
+    # array([[0, 1, 2, 0, 1, 2],
+    #        [3, 4, 5, 3, 4, 5]])
+    np.tile(a, (3, 2))
+    # array([[0, 1, 2, 0, 1, 2],
+    #        [3, 4, 5, 3, 4, 5],
+    #        [0, 1, 2, 0, 1, 2],
+    #        [3, 4, 5, 3, 4, 5],
+    #        [0, 1, 2, 0, 1, 2],
+    #        [3, 4, 5, 3, 4, 5]])
+    
+## broadcasting
+  - 벡터(또는 행렬)끼리 덧셈 혹은 뺄셈을 하려면 두 벡터의 크기가 같아야 함
+  - numpy에서는 서로 다른 크기를 가진 두 배열의 사칙연산도 지원
+  - 이 기능을 브로드캐스팅(broadcasting)이라고 함
+  - 크기가 작은 배열을 자동으로 반복 확장하여 크기가 큰 배열에 맞추는 방법
+
+![image](https://user-images.githubusercontent.com/85230269/207217941-964c3858-a56a-4bc6-883b-30cfe74bd459.png)![image](https://user-images.githubusercontent.com/85230269/207217959-78c0dc11-00a8-46de-b71d-43ea820c661c.png)
+
+![image](https://user-images.githubusercontent.com/85230269/207218400-e5a68754-27f0-4717-ad1d-58d67f9370eb.png)
+
+## 차원 축소 (dimension reduction) 연산
+  - 최대/최소 : `min`, `max`, `argmin`, `argmax`
+  - 통계 : `sum`, `mean`, `median`, `std`, `var`
+  - boolean : `all`, `any`
+  - ```py
+    x = np.array([1, 2, 3, 4])
+    x # array([1, 2, 3, 4])
+    np.sum(x) # 10
+    x.sum() # 10
+    x.min() # 1
+    x.max() # 4
+    x.argmin() # 0 (최솟값의 위치)
+    x.argmax() # 3 (최댓값의 위치)
+    
+    x = np.array([1, 2, 3, 1])
+    x.mean() # 1.75
+    np.median(x) # 1.5
+    np.all([True, True, False]) # False
+    np.any([True, True, False]) # True
+    
+    a = np.zeros((100, 100), dtype=np.int)
+    np.any(a != 0) # False
+    np.all(a == a) # True
+    
+    a = np.array([1, 2, 3, 2])
+    b = np.array([2, 2, 3, 2])
+    c = np.array([6, 4, 4, 5])
+    ((a <= b) & (b <= c)).all() # True
+    
+    # 연산의 대상이 2차원 이상인 경우에는 어느 차원으로 계산할 지 axis 인수로 지시
+    # axis = 0인 경우(default)는 열 연산, axis = 1인 경우는 행 연산
+    x = np.array([[1, 1], [2, 2]])
+    x.sum() # 6
+    x.sum(axis=0) # array([3, 3]) (열 합계)
+    x.sum(axis=1) # array([2, 4]) (행 합계)
+    
+## 정렬 (sorting)
+  - `sort` 함수나 method로 배열 안의 원소를 크기에 따라 정렬하여 새로운 배열 생성
+  - 2차원 이상인 경우에는 행이나 열을 각각 따로따로 정렬, axis 인수로 결정
+  - 정렬 시 axis 인수의 default 값은 0이 아닌 -1 (가장 안쪽(나중)의 차원)
+  - ```py
+    a = np.array([[4,  3,  5,  7],
+                  [1, 12, 11,  9],
+                  [2, 15,  1, 14]])
+    np.sort(a) # axis = -1 또는 axis = 1과 동일
+    # array([[ 3,  4,  5,  7],
+    #        [ 1,  9, 11, 12],
+    #        [ 1,  2, 14, 15]])
+    np.sort(a, axis=0)
+    # array([[ 1,  3,  1,  7],
+    #        [ 2, 12,  5,  9],
+    #        [ 4, 15, 11, 14]])
+    
+    # sort method는 해당 객체의 자료 자체가 변화하는 자체변화(in-place) method이므로 사용에 주의
+    a.sort(axis=1)
+    a
+    # array([[ 3,  4,  5,  7],
+    #        [ 1,  9, 11, 12],
+    #        [ 1,  2, 14, 15]])
