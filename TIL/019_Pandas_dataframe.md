@@ -1,9 +1,9 @@
-# DataFrame class
+## DataFrame class
   - Series가 1차원 vector data에 행방향(row) index를 붙인거라면
   - DataFrame class는 2차원 행렬 data에 index를 붙인거랑 비슷 (대신 DataFrame은 자료형이 각 열마다 다를 수 있음)
   - 2차원이니 row index 뿐 아니라 column index도 붙일 수 있음
 
-# DataFrame 생성
+## DataFrame 생성
   - ```py
     data = {
         "2015": [9904312, 3448737, 2890451, 2466052],
@@ -45,7 +45,7 @@
       ```
       ![image](https://user-images.githubusercontent.com/85230269/208340427-05bd275e-47c8-4f6d-a81c-e7a7565d09c1.png)
 
-# 열 data 갱신 / 추가 / 삭제
+## 열 data 갱신 / 추가 / 삭제
   - ```py
     # "2010-2015 증가율"이라는 이름의 열 추가
     df["2010-2015 증가율"] = df["2010-2015 증가율"] * 100
@@ -67,7 +67,7 @@
     ```
     ![image](https://user-images.githubusercontent.com/85230269/208341239-e8c237fe-a980-41ed-ac15-322e5659c6d3.png)
 
-# 열 indexing
+## 열 indexing
   - 하나의 열만 indexing 하면 Series 반환
     - ```py
       df["지역"]
@@ -105,7 +105,7 @@
       ```
       ![image](https://user-images.githubusercontent.com/85230269/208349528-508c171b-7f86-484a-ac82-fe1ae4af2a30.png)
 
-# 행 indexing
+## 행 indexing
   - 행 단위로 indexing -> slicing 사용
   - index의 값이 문자열 label인 경우 label slicing도 가능
   - ```py
@@ -128,7 +128,7 @@
     ```
     ![image](https://user-images.githubusercontent.com/85230269/208349834-5f171291-e00c-4031-baa6-aaeac7ef5321.png)
 
-# 개별 data indexing
+## 개별 data indexing
   - DataFrame에서 열 label로 Series를 indexing하면 Series가 됨 -> 이 Series를 다시 행 label로 indexing하면 개별 data 반환
   - ```py
     df["2015"]["서울"] # 9904312
