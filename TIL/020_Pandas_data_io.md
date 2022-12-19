@@ -27,7 +27,7 @@
   - 행 index 정보가 없어서 0부터 시작하는 정수 index가 자동으로 추가
     - 특정 열을 행 index로 쓰고 싶으면 `index_col` 인수를 사용
     - ```py
-      pd.read_csv('sample1.csv', index_col='c1') # 이거 근데 왜 열 index가 삐꾸같이 나올까 =_=
+      pd.read_csv('sample1.csv', index_col='c1')
       ```
       ![image](https://user-images.githubusercontent.com/85230269/208358778-18f5de9c-c0e4-4ebb-8d80-671099bc16dc.png)
   - 확장자가 comma가 아니면 (CSV가 아니면) `sep` 인수를 써서 구분자를 지정
