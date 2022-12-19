@@ -103,7 +103,7 @@
         # 대구    2466052
         # Name: 인구, dtype: int64
         
-# dictionary 자료형
+## dictionary 자료형
   - series는 label로 indexing이 가능하므로 index label을 key로 가지는 dictionary 자료형과 같음
   - dictionary 자료형에서 제공하는 in 연산 / for loop 가능
     - ```py
@@ -136,7 +136,7 @@
       # 대전    1490158
       # dtype: int64
       
-# index 기반 연산
+## index 기반 연산
   - 두 series에 대해 연산을 하는 경우 index가 같은 data에 대해서만 계산
     - ```py
       ds = s - s2
@@ -172,7 +172,7 @@
       # 인천    9.818107
       # dtype: float64
       
-# data 갱신 / 추가 / 삭제
+## data 갱신 / 추가 / 삭제
   - indexing을 이용해서 dictionary처럼 data 갱신(update) / 추가(add) 가능
     - ```py
       rs["부산"] = 1.63
