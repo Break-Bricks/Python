@@ -261,4 +261,17 @@
     # 10      중년 32
     # 11    nan 101
     # dtype: object
+  - ```py
+    data = np.random.randn(1000)
+    cats = pd.qcut(data, 4, labels=["Q1", "Q2", "Q3", "Q4"])
+    cats
+    # [Q2, Q1, Q2, Q3, Q1, ..., Q1, Q1, Q4, Q4, Q2]
+    # Length: 1000
+    # Categories (4, object): [Q1 < Q2 < Q3 < Q4]
     
+    pd.value_counts(cats)
+    # Q4    250
+    # Q3    250
+    # Q2    250
+    # Q1    250
+    # dtype: int64
